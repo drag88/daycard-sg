@@ -60,7 +60,7 @@ Letters that matter for verification: `s` loads sample data so a screenshot does
 feeds overwrite it at their next refresh, and a restart clears it), `p` steps
 to the next view (card, buses, room, forecast, photos, focus, garden), `g` opens the garden, `k` opens the setup
 page, `r` / `R` start and stop focus, `F` / `G` report focus and garden state, `C` lists voice phrases, `i` status,
-`f` feed ages. Full list: `handleSerial()` in `daycard.ino` and the daycard skill.
+`f` feed ages. Full list: `handleInput()` in `daycard.ino` and the daycard skill.
 
 Avoid `H` (hangs the loop on purpose), `W` (drops Wi-Fi), `D<name>` (deletes a photo), `K` (replaces the LTA key)
 and `T` (replaces the user's daily intention) unless the run is about exactly that.
