@@ -1,0 +1,9 @@
+# Your own settings (copy of config.h); keep your location out of git
+config.local.h
+# Local scratch, flash backups and verification output
+.scratch/
+backup/
+verify-out/
+*.bin
+.DS_Store
+__pycache__/

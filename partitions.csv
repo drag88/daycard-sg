@@ -1,0 +1,9 @@
+# esp_sr_16 with the two 3 MB OTA slots merged into one 6 MB app (ESP-SR alone is ~2 MB; we flash over USB, no OTA).
+# nvs (Wi-Fi + LTA key) and model (speech models, flashed at 0xC10000 by the esp_sr_16 scheme) keep their addresses.
+# Name,   Type, SubType, Offset,   Size,     Flags
+nvs,      data, nvs,     0x9000,   0x5000,
+otadata,  data, ota,     0xe000,   0x2000,
+app0,     app,  ota_0,   0x10000,  0x600000,
+spiffs,   data, spiffs,  0x610000, 0x600000,
+model,    data, spiffs,  0xC10000, 0x3E0000,
+coredump, data, coredump,0xFF0000, 0x10000,

@@ -1,0 +1,51 @@
+# Built-in quotes: shown until the first live Wikiquote quote arrives after a restart. Format: text | author
+# Only quotes with a well-established source. Edit freely, then run: python3 tools/make_assets.py
+Adopt the pace of nature: her secret is patience. | Ralph Waldo Emerson
+Write it on your heart that every day is the best day in the year. | Ralph Waldo Emerson
+The best way out is always through. | Robert Frost
+While we are postponing, life speeds by. | Seneca
+Hope is the thing with feathers that perches in the soul. | Emily Dickinson
+Forever is composed of nows. | Emily Dickinson
+I dwell in Possibility. | Emily Dickinson
+Heaven is under our feet as well as over our heads. | Henry David Thoreau
+I am not afraid of storms, for I am learning how to sail my ship. | Louisa May Alcott
+One touch of nature makes the whole world kin. | William Shakespeare
+Our doubts are traitors, and make us lose the good we oft might win, by fearing to attempt. | William Shakespeare
+There is nothing either good or bad, but thinking makes it so. | William Shakespeare
+Tell me, what is it you plan to do with your one wild and precious life? | Mary Oliver
+Instructions for living a life: Pay attention. Be astonished. Tell about it. | Mary Oliver
+How we spend our days is, of course, how we spend our lives. | Annie Dillard
+Almost everything will work again if you unplug it for a few minutes, including you. | Anne Lamott
+The cure for anything is salt water: sweat, tears or the sea. | Isak Dinesen
+Wherever you are, be all there. | Jim Elliot
+I took a deep breath and listened to the old brag of my heart. I am, I am, I am. | Sylvia Plath
+And now that you don't have to be perfect, you can be good. | John Steinbeck
+The sun himself is weak when he first rises, and gathers strength and courage as the day gets on. | Charles Dickens
+No one is useless in this world who lightens the burden of it for any one else. | Charles Dickens
+What do we live for, if it is not to make life less difficult to each other? | George Eliot
+There is no charm equal to tenderness of heart. | Jane Austen
+Life appears to me too short to be spent in nursing animosity or registering wrongs. | Charlotte Brontë
+We are all in the gutter, but some of us are looking at the stars. | Oscar Wilde
+To live is the rarest thing in the world. Most people exist, that is all. | Oscar Wilde
+One day I will find the right words, and they will be simple. | Jack Kerouac
+I love deadlines. I like the whooshing sound they make as they fly by. | Douglas Adams
+Well done is better than well said. | Benjamin Franklin
+Lost time is never found again. | Benjamin Franklin
+Some people walk in the rain, others just get wet. | Roger Miller
+Let the rain kiss you. | Langston Hughes
+Hold fast to dreams, for if dreams die, life is a broken-winged bird that cannot fly. | Langston Hughes
+A journey of a thousand miles begins with a single step. | Lao Tzu
+Fall seven times, stand up eight. | Japanese proverb
+Little by little, one travels far. | Spanish proverb
+The best time to plant a tree was twenty years ago. The second best time is now. | Proverb
+Time you enjoy wasting is not wasted time. | Marthe Troly-Curtin
+Very little is needed to make a happy life; it is all within yourself, in your way of thinking. | Marcus Aurelius
+The impediment to action advances action. What stands in the way becomes the way. | Marcus Aurelius
+Dwell on the beauty of life. Watch the stars, and see yourself running with them. | Marcus Aurelius
+Energy is eternal delight. | William Blake
+To see a World in a Grain of Sand, and a Heaven in a Wild Flower. | William Blake
+No man is an island, entire of itself. | John Donne
+Be patient toward all that is unsolved in your heart and try to love the questions themselves. | Rainer Maria Rilke
+Sometimes I've believed as many as six impossible things before breakfast. | Lewis Carroll
+Not everything that is faced can be changed, but nothing can be changed until it is faced. | James Baldwin
+You must do the thing you think you cannot do. | Eleanor Roosevelt

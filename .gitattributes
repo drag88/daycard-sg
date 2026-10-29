@@ -1,0 +1,2 @@
+# Internal task notes and review receipts stay out of exports (git archive).
+dev/ export-ignore
