@@ -76,7 +76,7 @@ and how fast.
   2 minutes. Keep `LoopCore=0`. Expect ~24 fps.
 - **Indoor temperature reads high**: the SHTC3 sits beside a hot ESP32 (raw ~35 °C with voice on).
   `TEMP_OFFSET_C` (-5.4) and `RH_OFFSET` (-4) in `config.h` came from one board against a room meter. To redo: meter beside the card, read `i` at the same moment, set `TEMP_OFFSET_C` = meter - raw, flash, then set
-  `RH_OFFSET` = meter RH - the shown RH. `rhAt` scales RH by about 6 points per degree of correction, so get the
+  `RH_OFFSET` = old `RH_OFFSET` + meter RH - shown RH (shown already includes the old offset). `rhAt` scales RH by about 6 points per degree of correction, so get the
   temperature right first. The room chart recomputes all history. Opening the port with DTR/RTS forced low resets
   the board; pyserial's defaults don't.
 - **No photos**: the frame appears after `IDLE_MINUTES` (5) of quiet, or 4 taps of KEY, or "Flubber, show photos".

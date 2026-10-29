@@ -46,8 +46,9 @@ clock, quotes, room readings, focus timer and photos, but no buses or weather.
    `sketch.yaml` pins the board settings, the ESP32 core (3.3.12) and the libraries (U8g2, ArduinoJson 7,
    WiFiManager 2.0.17), so the first compile fetches exactly those.
 5. Give it about 30 seconds after flashing. On first boot the screen shows a Wi-Fi network (`Daycard-Setup`) and a
-   password that changes every boot. Join it from your phone, pick your Wi-Fi, paste your LTA AccountKey and save.
-   Both stay on the board only. Hold KEY for 3 seconds to open this setup page again later.
+   password that changes every boot. Join it from your phone, choose Configure WiFi and pick your 2.4 GHz network.
+   Once the board joins it, the setup network closes. Hold KEY for 3 seconds to open it again, rejoin, choose Setup
+   and paste your LTA AccountKey. Both stay on the board only. Hold KEY the same way whenever you need setup again.
 
 Reflashing keeps the saved Wi-Fi and key. Over USB, sending `K<key>` and a newline also sets the key.
 
@@ -199,7 +200,8 @@ esptool --port /dev/cu.usbmodem* write-flash 0 factory-flash-16MB.bin
   `config.h`.
 - Indoor temperature reads high because the SHTC3 sensor sits beside the warm ESP32. Put a room thermometer next to
   the card, read the serial command `i` at the same moment, set `TEMP_OFFSET_C` = meter − raw, flash, then set
-  `RH_OFFSET` = meter humidity − shown humidity. Get the temperature right first: humidity is corrected for it.
+  `RH_OFFSET` = old `RH_OFFSET` + meter humidity − shown humidity (the shown value already includes the old
+  offset). Get the temperature right first: humidity is corrected for it.
 - Built-in quotes and type: edit `tools/quotes.txt`, then
   `uv run --no-project --with pillow python tools/make_assets.py` to re-render `assets.h` (clock digits, built-in
   quotes, and the Newsreader letters live quotes are set in). On a Mac with Homebrew, prefix it with

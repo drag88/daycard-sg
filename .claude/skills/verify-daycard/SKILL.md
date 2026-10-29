@@ -24,7 +24,9 @@ arduino-cli upload -p "$PORT" .
 ```
 
 The build uses `config.local.h` when it exists, otherwise `config.h`. Say which one you flashed. The upload has
-landed when it prints `Hash of data verified.` for each region, including the speech models at `0x00c10000`.
+landed when each of the five regions ends in `Hash of data verified.`, or, for a region that didn't change,
+`No changed sectors found` followed by `'<file>' at <address> verified.` (esptool 5 skips unchanged sectors). Check
+the app at `0x00010000` and the speech models at `0x00c10000` in particular.
 Ready means usable: about 30 s after the upload the speech models are loaded and Wi-Fi has joined. Check with the
 doctor, not a timer. Teardown: nothing keeps running on the computer; the board runs on.
 
@@ -76,7 +78,8 @@ Proof standards:
 - Sample data (`s`) proves layout and config, not live feeds. Prove live data with `f` (feed ages under a few
   minutes) or a screenshot taken without `s`.
 - Look at every screenshot before calling it proof. A blank or half-drawn frame is a failed grab; retake it.
-- Don't save `--boot` output or anything showing the Wi-Fi name, the LTA key or the user's intention text.
+- Don't publish `--boot` output, upload logs (they print the board's MAC address) or anything showing the Wi-Fi
+  name, the LTA key or the user's intention text.
 
 ## Cleanup
 

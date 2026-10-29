@@ -463,11 +463,8 @@ static bool quoteJob() {  // runs every second and keeps its own time, so a fail
   if ((int32_t)(millis() - retryAt) < 0 || (!quoteWanted && due == slot)) return true;
   retryAt = millis() + 60000;  // a failed fetch waits a minute; a good one clears this below
   int author;
-  bool again;
-  do {
-    author = esp_random() % NAUTHORS, again = false;
-    for (int r : recent) again |= r == author;
-  } while (again);
+  do author = esp_random() % NAUTHORS;
+  while (quoteRecent(recent, recentAt, NAUTHORS, author));
   static char text[400];
   if (!fetchQuote(author, text, sizeof text)) return true;
   static int ring = 0;
@@ -1114,6 +1111,13 @@ static void drawTwoLines(const char *text, int center, int baseline, int width) 
   if (*second) centered(center, baseline + 20, second);
 }
 
+// "Tap BOOT or say 'Flubber focus'", with the configured CALL_NAME capitalised. Render loop only.
+static const char *voiceHint() {
+  static char hint[48];
+  if (!*hint) snprintf(hint, sizeof hint, "Tap BOOT or say '%c%s focus'", toupper((unsigned char)CALL_NAME[0]), CALL_NAME + 1);
+  return hint;
+}
+
 static bool hasIntention(time_t now) { return *intention && intentionDay == sgtDay(now); }
 
 static bool drawPriority(time_t now, Scene sc) {
@@ -1186,7 +1190,7 @@ static void drawFocus(time_t now) {
   centered(W / 2, 244, garden.total == 1 ? "flower in your garden" : "flowers in your garden");
   g->setFont(u8g2_font_helvR08_tf);
   char hint[64];
-  snprintf(hint, sizeof hint, "Tap BOOT or say '%c%s focus' to begin.", toupper((unsigned char)CALL_NAME[0]), CALL_NAME + 1);
+  snprintf(hint, sizeof hint, "%s to begin.", voiceHint());
   centered(W / 2, 292, focus.active() ? "KEY changes view. Hold BOOT 2s to stop." : hint);
 }
 
@@ -1298,7 +1302,8 @@ static void drawMain(const tm &lt, bool haveTime, time_t now) {
     bool sleepy = haveTime && (lt.tm_hour >= 22 || lt.tm_hour < 7);
     bool happy = celebrateAt && catNow - celebrateAt < 5000;
     CatMotion motion = catMotion(catNow, wet, sleepy, happy, focus.phase == FOCUS_WORK);
-    CatCaption caption = catCaption(catNow, motion.activity, wet, sleepy, happy, routine == ROUTINE_EVENING, voiceOk);
+    CatCaption caption = catCaption(catNow, motion.activity, wet, sleepy, happy, routine == ROUTINE_EVENING,
+                                    voiceOk ? voiceHint() : nullptr);
     g->setFont(u8g2_font_helvB08_tf);
     g->drawStr(MARGIN, 261, focus.active() ? (focus.phase == FOCUS_WORK ? "SOMETHING IS GROWING" : "A LITTLE BREATHING ROOM") : caption.title);
     g->setFont(u8g2_font_helvR10_tf);
@@ -1313,7 +1318,10 @@ static void drawMain(const tm &lt, bool haveTime, time_t now) {
 
 static void drawForecast() {
   g->setFont(u8g2_font_helvB08_tf);
-  spaced(MARGIN, 18, "NEXT 24 HOURS  \xb7  WEST", 1);
+  char heading[40];
+  snprintf(heading, sizeof heading, "NEXT 24 HOURS  \xb7  %s", REGION);
+  for (char *c = heading; *c; c++) *c = toupper((unsigned char)*c);
+  spaced(MARGIN, 18, heading, 1);
   g->setFont(u8g2_font_helvR10_tf);
   for (int i = 0; i < 3; i++) {
     g->drawUTF8(MARGIN, 42 + i * 20, S.periodLabel[i].c_str());
@@ -1471,7 +1479,7 @@ static void drawSetup() {
   g->drawUTF8(MARGIN, 194, "4.  Setup: paste your LTA DataMall key, Save.");
   g->drawHLine(MARGIN, 230, W - 2 * MARGIN);
   g->setFont(u8g2_font_helvR08_tf);
-  g->drawUTF8(MARGIN, 252, "Hold KEY for 3 seconds to come back here.");
+  g->drawUTF8(MARGIN, 252, "New board? Do step 3, then hold KEY 3 s to come back for step 4.");
 }
 
 // ---------- input ----------

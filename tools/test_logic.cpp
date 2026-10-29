@@ -29,9 +29,11 @@ int main() {
     assert(catMotion(47000, false, true, false, false).activity == CAT_NAP);
     assert(catMotion(47000, false, false, true, false).activity == CAT_SIT);
     assert(catMotion(47000, false, false, false, true).activity == CAT_SIT);
+    // A renamed companion: the hint must follow CALL_NAME, not a name baked into the captions.
     auto caption = [](uint32_t t, bool wet = false, bool sleepy = false, bool happy = false,
                       bool evening = false, bool voice = true) {
-      return catCaption(t, catMotion(t, wet, sleepy, happy).activity, wet, sleepy, happy, evening, voice);
+      return catCaption(t, catMotion(t, wet, sleepy, happy).activity, wet, sleepy, happy, evening,
+                        voice ? "Tap BOOT or say 'Mochi focus'" : nullptr);
     };
     assert(!strcmp(caption(47000).title, "OUT FOR A WANDER"));
     assert(!strcmp(caption(51000).title, "STRETCH BREAK"));
@@ -41,11 +43,12 @@ int main() {
     assert(!strcmp(caption(47000, true).title, "UNDER COVER"));
     assert(!strcmp(caption(47000, true, true, true).title, "OFF DUTY"));
     assert(!strcmp(caption(47000, false, false, true).title, "NICELY DONE"));
-    assert(strstr(caption(0).text, "Flubber focus"));
-    assert(strstr(caption(7999).text, "Flubber focus"));
-    assert(!strstr(caption(8000).text, "Flubber focus"));
-    assert(!strstr(caption(299999).text, "Flubber focus"));
-    assert(strstr(caption(300000).text, "Flubber focus"));
+    assert(strstr(caption(0).text, "Mochi focus"));
+    assert(strstr(caption(7999).text, "Mochi focus"));
+    assert(!strstr(caption(8000).text, "Mochi focus"));
+    assert(!strstr(caption(299999).text, "Mochi focus"));
+    assert(strstr(caption(300000).text, "Mochi focus"));
+    assert(!strstr(caption(0, false, false, false, false, false).text, "Mochi"));
     assert(!strstr(caption(0, false, false, false, false, false).text, "Flubber"));
     assert(strcmp(caption(10000).text, caption(40000).text));
     assert(strcmp(caption(10000).text, caption(10000, false, false, false, true).text));
@@ -202,6 +205,23 @@ int main() {
   assert(zoneOffsetMin(sydney, utc(2026, 12, 31, 14, 0)) == 660 && zoneOffsetMin(sydney, utc(2027, 1, 1, 0, 0)) == 660);
   assert(zoneOffsetMin(auckland, utc(2026, 4, 4, 13, 59)) == 780 && zoneOffsetMin(auckland, utc(2026, 4, 4, 14, 0)) == 720);
   assert(zoneOffsetMin(auckland, utc(2026, 9, 26, 13, 59)) == 720 && zoneOffsetMin(auckland, utc(2026, 9, 26, 14, 0)) == 780);
+
+  // Quote authors: the last few wait their turn, but a short QUOTE_AUTHORS list always leaves one to pick.
+  for (int n = 1; n <= 12; n++) {
+    int recent[8] = {-1, -1, -1, -1, -1, -1, -1, -1}, recentAt = 0;
+    unsigned seed = 7;
+    for (int round = 0; round < 200; round++) {
+      int author, tries = 0;
+      do {
+        seed = seed * 1103515245u + 12345u;
+        author = (int)(seed >> 16) % n;
+        assert(++tries < 10000);  // the firmware loops here until it finds one
+      } while (quoteRecent(recent, recentAt, n, author));
+      if (n == 2 && recentAt) assert(author != recent[(recentAt - 1) % 8]);
+      if (n > 8) for (int r : recent) assert(r != author);
+      recent[recentAt++ % 8] = author;
+    }
+  }
 
   // Wikiquote lines, shaped like the ones on the pages in QUOTE_AUTHORS (October 2026).
   {

@@ -66,7 +66,8 @@ static const char *const QUOTE_AUTHORS[][2] = {
 static const char *AP_NAME = "Daycard-Setup";  // the Wi-Fi network the board opens for setup
 // The SHTC3 sensor sits next to the warm ESP32 and reads high. To calibrate, put a room thermometer beside the
 // card, read the serial command i at the same moment, set TEMP_OFFSET_C = meter - raw, flash, then set
-// RH_OFFSET = meter humidity - shown humidity. These defaults came from one board with voice on, plugged in.
+// RH_OFFSET = old RH_OFFSET + meter humidity - shown humidity (shown already includes the old offset).
+// These defaults came from one board with voice on, plugged in.
 // ponytail: fixed offsets; the board runs cooler just after boot and warmer while charging, add an uptime/charge
 // model if that matters.
 static const float TEMP_OFFSET_C = -5.4f, RH_OFFSET = -4.0f;

@@ -30,7 +30,9 @@ inline CatMotion catMotion(uint32_t now, bool wet = false, bool sleepy = false, 
 
 struct CatCaption { const char *title, *text; };
 
-inline CatCaption catCaption(uint32_t now, CatActivity activity, bool wet, bool sleepy, bool happy, bool evening, bool voice) {
+// voiceHint is the focus prompt with the configured name ("Tap BOOT or say 'Flubber focus'"), or null with voice off.
+inline CatCaption catCaption(uint32_t now, CatActivity activity, bool wet, bool sleepy, bool happy, bool evening,
+                             const char *voiceHint) {
   unsigned variant = now / 30000 % 3;
   if (sleepy) return {"OFF DUTY", variant % 2 ? "Keeping you company quietly." : "I think we've done enough today."};
   if (wet) return {"UNDER COVER", variant % 2 ? "Keeping my paws dry." : "A good day to stay cosy."};
@@ -48,12 +50,20 @@ inline CatCaption catCaption(uint32_t now, CatActivity activity, bool wet, bool 
     return {titles[i], activityText[i][now / 270000 % 2]};
   }
   if (now % 300000 < 8000)
-    return {"A LITTLE FOCUS?", voice ? "Tap BOOT or say 'Flubber focus'" : "Tap BOOT for 25 quiet minutes"};
+    return {"A LITTLE FOCUS?", voiceHint ? voiceHint : "Tap BOOT for 25 quiet minutes"};
   static const char *const idleText[][3] = {
     {"Keeping you company.", "No rush. I'm right here.", "A fine spot for a little thinking."},
     {"A little less doing.", "Time to let the day settle.", "Nothing urgent in my kingdom."}
   };
   return {evening ? "TAKING IT EASY" : "IN GOOD COMPANY", idleText[evening][variant]};
+}
+
+// Quote authors: the last eight wait their turn, but never every author, or a short list would leave none to pick.
+inline bool quoteRecent(const int (&recent)[8], int recentAt, int nAuthors, int author) {
+  int avoid = nAuthors > 8 ? 8 : nAuthors - 1;
+  for (int j = 0; j < avoid; j++)
+    if (recent[((recentAt - 1 - j) % 8 + 8) % 8] == author) return true;
+  return false;
 }
 
 enum FocusPhase { FOCUS_IDLE, FOCUS_WORK, FOCUS_BREAK, FOCUS_DONE };
