@@ -19,9 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
-Third-party parts keep their own licences:
-- ST7305_U8g2.cpp and ST7305_U8g2.h: Waveshare's display driver, Apache License 2.0
-  (ST7305_U8g2-LICENSE.txt), modified as noted at the top of each file.
-- tools/fonts/: DM Serif Display and Newsreader, SIL Open Font License 1.1 (the OFL-*.txt files beside them).
-  assets.h holds bitmaps rendered from these fonts.
